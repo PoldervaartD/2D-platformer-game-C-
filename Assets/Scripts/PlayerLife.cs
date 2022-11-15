@@ -1,29 +1,76 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
-    private Animator anim;
-    private Rigidbody2D rb;
+    public float levelTime;
+    private bool isCounting = true;
+    public static int health = 3;
+    public Image totalhealthBar;
+    public Image currenthealthBar;
+    public Text TimerText;
 
-    [SerializeField] private AudioSource deathSoundEffect;
+
     private void Start()
     {
-        anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
+        levelTime = 40;
+        Debug.Log(health);
+        currenthealthBar.fillAmount = (float)health / 10;
     }
 
-    private void Die()
+    private void Update()
     {
-        deathSoundEffect.Play();
-        rb.bodyType = RigidbodyType2D.Static;
-        anim.SetTrigger("death");
+        if (isCounting)
+        { 
+            if (levelTime > 0)
+            {
+                levelTime -= Time.deltaTime;
+                TimerText.text = Mathf.RoundToInt(levelTime).ToString();
+            }
+
+            else if (levelTime <= 0)
+            {
+                levelTime = 0;
+                TimeIsOver();
+                isCounting = false;
+            }
+        }
+
+        if (health <= 0)
+        {
+            health = 3;
+            SceneManager.LoadScene(0);
+        }
+
     }
 
-    private void RestartLevel()
+    public void TakeDamage()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        health--;
+        ReloadLevel();
+
+    }
+
+    public void AddHealth()
+    { if (health < 3)
+        {
+            health++;
+            currenthealthBar.fillAmount = (float)health / 10;
+        }
+    }
+
+    private void TimeIsOver()
+    {
+        health--;
+        ReloadLevel();
+    }
+
+    private void ReloadLevel()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.buildIndex);
     }
 }

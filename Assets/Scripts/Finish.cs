@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Finish : MonoBehaviour
 {
     private AudioSource finishSound;
+    [SerializeField] private Text cherriesText;
+
+
 
     private bool levelCompleted = false;
         private void Start()
@@ -15,11 +19,11 @@ public class Finish : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player" && !levelCompleted)
+        if (collision.gameObject.name == "Player" && !levelCompleted && cherriesText.text == "Afval: 4")
         {
             finishSound.Play();
             levelCompleted = true;
-            Invoke("CompleteLevel", 4f);
+            Invoke("CompleteLevel", 1f);
         }
     }
     

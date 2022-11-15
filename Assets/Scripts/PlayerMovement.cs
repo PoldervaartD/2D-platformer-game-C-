@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
        private SpriteRenderer sprite;
        private Animator anim;
 
+
        [SerializeField] private LayerMask jumpableGround;
 
        private float dirX = 0f;
@@ -46,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         UpdateAnimantionState();
+
+
     }
 
     private void UpdateAnimantionState()

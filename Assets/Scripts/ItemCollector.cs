@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ItemCollector : MonoBehaviour
 {
-    private int fruits = 0;
+    public int fruits = 0;
 
     [SerializeField] private Text cherriesText;
 
@@ -17,7 +17,7 @@ public class ItemCollector : MonoBehaviour
             collectionSound.Play();
             Destroy(collision.gameObject);
             fruits++;
-            cherriesText.text = "Fruits: " + fruits;
+            cherriesText.text = "Afval: " + fruits;
         }
     }
 }
